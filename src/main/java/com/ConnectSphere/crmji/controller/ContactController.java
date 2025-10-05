@@ -6,6 +6,7 @@ import com.ConnectSphere.crmji.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -57,6 +58,7 @@ record UpdateContactRequest(
 
 @RestController // Marks this class as a Controller where every method returns a domain object instead of a view.
 @RequestMapping("/api/contacts") // Maps all HTTP requests starting with '/api/contacts' to this controller.
+@PreAuthorize("hasRole('ADMIN')")
 public class ContactController {
 
     // Injects the Service layer bean

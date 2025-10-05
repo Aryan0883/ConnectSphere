@@ -5,6 +5,7 @@ import com.ConnectSphere.crmji.service.DealService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -45,6 +46,7 @@ public class DealController {
      * Fetches all deals in the system.
      */
     @GetMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> getAllDeals() {
         List<Deal> deals = dealService.getAllDeals();
         if (deals.isEmpty()) {
@@ -59,6 +61,7 @@ public class DealController {
      * Fetches a single deal by its unique ID.
      */
     @GetMapping("/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> getDealById(@PathVariable Long id) {
         Optional<Deal> deal = dealService.getDealById(id);
         return deal.isPresent() ?
@@ -123,6 +126,7 @@ public class DealController {
      * Creates a new deal.
      */
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<Object> createDeal(@RequestBody CreateDealRequest request) {
         try {
             Deal newDeal = new Deal();
@@ -150,6 +154,7 @@ public class DealController {
      * Updates an existing deal.
      */
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<Object> updateDeal(@PathVariable Long id, @RequestBody UpdateDealRequest request) {
         try {
             Deal dealDetails = new Deal();
@@ -180,6 +185,7 @@ public class DealController {
      * Deletes a deal by its ID.
      */
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteDeal(@PathVariable Long id) {
         boolean wasDeleted = dealService.deleteDeal(id);
         if (wasDeleted) {

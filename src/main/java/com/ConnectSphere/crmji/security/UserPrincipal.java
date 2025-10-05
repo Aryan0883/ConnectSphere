@@ -30,6 +30,11 @@ public class UserPrincipal implements UserDetails {
      * @return UserPrincipal for Spring Security
      */
     public static UserPrincipal create(User user) {
+        String userRole = user.getRole();
+
+        // Ensure it has ROLE_ prefix
+        String authorityRole = userRole.startsWith("ROLE_") ?
+                userRole : "ROLE_" + userRole;
         List<GrantedAuthority> authorities = Collections.singletonList(
                 new SimpleGrantedAuthority("ROLE_" + user.getRole())
         );
