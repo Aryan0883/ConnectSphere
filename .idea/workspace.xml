@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="41c21cd2-8285-47f8-83c7-90cbf4f0a7b9" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.gitattributes" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw" beforeDir="false" afterPath="$PROJECT_DIR$/backend/mvnw" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/backend/mvnw.cmd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ConnectSphere/crmji/CrmjiApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ConnectSphere/crmji/CrmjiApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ConnectSphere/crmji/controller/ActivityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ConnectSphere/crmji/controller/ActivityController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ConnectSphere/crmji/controller/ContactController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ConnectSphere/crmji/controller/ContactController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ConnectSphere/crmji/controller/DealController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ConnectSphere/crmji/controller/DealController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ConnectSphere/crmji/controller/LeadController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ConnectSphere/crmji/controller/LeadController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ConnectSphere/crmji/model/Activity.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ConnectSphere/crmji/model/Activity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ConnectSphere/crmji/model/Contact.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ConnectSphere/crmji/model/Contact.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ConnectSphere/crmji/model/Deal.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ConnectSphere/crmji/model/Deal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ConnectSphere/crmji/model/Lead.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ConnectSphere/crmji/model/Lead.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ConnectSphere/crmji/repository/ActivityRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ConnectSphere/crmji/repository/ActivityRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ConnectSphere/crmji/repository/ContactRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ConnectSphere/crmji/repository/ContactRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ConnectSphere/crmji/repository/DealRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ConnectSphere/crmji/repository/DealRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ConnectSphere/crmji/repository/LeadRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ConnectSphere/crmji/repository/LeadRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ConnectSphere/crmji/service/ActivityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ConnectSphere/crmji/service/ActivityService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ConnectSphere/crmji/service/ContactService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ConnectSphere/crmji/service/ContactService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ConnectSphere/crmji/service/DealService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ConnectSphere/crmji/service/DealService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ConnectSphere/crmji/service/LeadService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/ConnectSphere/crmji/service/LeadService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/ConnectSphere/crmji/CrmjiApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/ConnectSphere/crmji/CrmjiApplicationTests.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="3437cqoxcPIufGQ7AH6bYnbneXX" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.CrmjiApplication.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "settings.sync"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/backend" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26199.169" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="41c21cd2-8285-47f8-83c7-90cbf4f0a7b9" name="Changes" comment="" />
+      <created>1760430483301</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1760430483301</updated>
+    </task>
+    <servers />
+  </component>
+</project>
