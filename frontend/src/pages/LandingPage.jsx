@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import Footer from '../components/Footer'
+import { TypeAnimation } from 'react-type-animation';
+
+
 
 export default function LandingPage() {
   return (
@@ -16,7 +19,27 @@ export default function LandingPage() {
           className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight tracking-tight text-slate-800"
         >
           Simplify Client Management. <br />
-          <span className="text-[var(--brand)]">Amplify Growth.</span>
+
+          <TypeAnimation
+                sequence={[
+                  // Same substring at the start will only be typed out once, initially
+                  'Build Stronger Relationships.',
+                  1000, // wait 1s before replacing "Mice" with "Hamsters"
+                  'Amplify Growth.',
+                  1000,
+                  'Track. Engage. Succeed.',
+                  1000,
+                  'Your All-in-One CRM Solution.',
+                  1000
+                ]}
+                wrapper="span"
+                speed={50}
+                style={{ fontSize: '3rem', display: 'inline-block' }}
+                repeat={Infinity}
+                className="text-[var(--brand)]"
+              />
+
+{/*           <span className="">Amplify Growth.</span> */}
         </motion.h1>
 
         {/* Subtext */}
@@ -103,3 +126,7 @@ export default function LandingPage() {
     </div>
   )
 }
+
+
+
+
