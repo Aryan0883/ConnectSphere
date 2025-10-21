@@ -7,6 +7,15 @@ import Footer from '../components/Footer'
 import { UserIcon, EnvelopeIcon, LockClosedIcon } from '@heroicons/react/24/outline'
 import toast from 'react-hot-toast'
 
+// Utility function to extract error message
+const getErrorMessage = (error) => {
+  if (typeof error === 'string') return error
+  if (error?.response?.data?.message) return error.response.data.message
+  if (error?.response?.data) return error.response.data
+  if (error?.message) return error.message
+  return 'An error occurred'
+}
+
 export default function Signup() {
   const { signup } = useAuth()
   const navigate = useNavigate()
@@ -29,12 +38,17 @@ export default function Signup() {
         toast.error('Passwords do not match')
         return
       }
-      await signup({ firstName, lastName, email, password })
+      console.log('Signup form submitted')
+      const result = await signup({ firstName, lastName, email, password })
+      console.log('Signup successful, result:', result)
       toast.success('Account created successfully!')
+      console.log('Navigating to dashboard...')
       navigate('/dashboard')
     } catch (err) {
-      setError(err?.response?.data || 'Signup failed')
-      toast.error(String(err?.response?.data || 'Signup failed'))
+      console.error('Signup failed:', err)
+      const errorMessage = getErrorMessage(err)
+      setError(errorMessage)
+      toast.error(errorMessage)
     } finally {
       setLoading(false)
     }
