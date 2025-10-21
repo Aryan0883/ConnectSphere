@@ -4,7 +4,7 @@
 :root {
   --brand: #2563EB; /* primary blue */
   --accent: #F97316; /* highlight orange */
-  --bg: #FFFFFF;    /* soft background */
+  --bg: #FFFFFF;    /* white background */
 }
 
 html, body, #root {
