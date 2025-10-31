@@ -7,6 +7,15 @@ import { EnvelopeIcon, LockClosedIcon } from '@heroicons/react/24/outline'
 import toast from 'react-hot-toast'
 import Footer from '../components/Footer'
 
+// Utility function to extract error message
+const getErrorMessage = (error) => {
+  if (typeof error === 'string') return error
+  if (error?.response?.data?.message) return error.response.data.message
+  if (error?.response?.data) return error.response.data
+  if (error?.message) return error.message
+  return 'An error occurred'
+}
+
 export default function Login() {
   const { login } = useAuth()
   const navigate = useNavigate()
@@ -20,12 +29,17 @@ export default function Login() {
     setError('')
     setLoading(true)
     try {
-      await login(email, password)
-      navigate('/dashboard')
+      console.log('Login form submitted')
+      const result = await login(email, password)
+      console.log('Login successful, result:', result)
       toast.success('Logged in')
+      console.log('Navigating to dashboard...')
+      navigate('/dashboard')
     } catch (err) {
-      setError(err?.response?.data || 'Login failed')
-      toast.error(String(err?.response?.data || 'Login failed'))
+      console.error('Login failed:', err)
+      const errorMessage = getErrorMessage(err)
+      setError(errorMessage)
+      toast.error(errorMessage)
     } finally {
       setLoading(false)
     }

@@ -12,18 +12,24 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     async function bootstrap() {
       try {
+        console.log('AuthContext bootstrap - token:', token)
         setLoading(true)
         if (token) {
+          console.log('Token exists, fetching user data...')
           const { data } = await AuthAPI.me()
+          console.log('User data received:', data)
           setUser(data)
         } else {
+          console.log('No token, setting user to null')
           setUser(null)
         }
       } catch (e) {
+        console.error('Bootstrap error:', e)
         setUser(null)
         localStorage.removeItem('token')
         setToken(null)
       } finally {
+        console.log('Bootstrap complete, setting loading to false')
         setLoading(false)
       }
     }
@@ -32,21 +38,48 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password) => {
     setError(null)
-    const { data } = await AuthAPI.login(email, password)
-    const jwt = data?.token
-    if (jwt) {
-      localStorage.setItem('token', jwt)
-      setToken(jwt)
-      const me = await AuthAPI.me()
-      setUser(me.data)
+    try {
+      console.log('Attempting login with:', email)
+      const { data } = await AuthAPI.login(email, password)
+      console.log('Login response:', data)
+      
+      const jwt = data?.token
+      if (jwt) {
+        console.log('JWT received, storing token')
+        localStorage.setItem('token', jwt)
+        setToken(jwt)
+        
+        // Wait a bit for the token to be set, then fetch user data
+        setTimeout(async () => {
+          try {
+            const me = await AuthAPI.me()
+            console.log('User data fetched:', me.data)
+            setUser(me.data)
+          } catch (meError) {
+            console.error('Error fetching user data:', meError)
+            // Don't throw here, just log the error
+          }
+        }, 100)
+      } else {
+        throw new Error('No token received from login response')
+      }
+      return data
+    } catch (error) {
+      console.error('Login error:', error)
+      setError(error)
+      throw error
     }
-    return data
   }
 
   const signup = async ({ firstName, lastName, email, password }) => {
     setError(null)
-    await AuthAPI.register({ firstName, lastName, email, password })
-    return login(email, password)
+    try {
+      await AuthAPI.register({ firstName, lastName, email, password })
+      return login(email, password)
+    } catch (error) {
+      setError(error)
+      throw error
+    }
   }
 
   const logout = () => {
