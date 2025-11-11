@@ -161,14 +161,14 @@ export default function Signup() {
 
               {error && <p className="text-red-500 text-sm">{String(error)}</p>}
 
-              <button type="submit" disabled={loading} className="btn-brand w-full">
+              <button type="submit" disabled={loading} className="btn-brand w-full cursor-pointer">
                 {loading ? 'Creating account…' : 'Create account'}
               </button>
             </form>
 
             <p className="mt-4 text-sm">
               Already have an account?{' '}
-              <Link to="/login" className="underline">
+              <Link to="/login" className="underline cursor-pointer">
                 Log in
               </Link>
             </p>

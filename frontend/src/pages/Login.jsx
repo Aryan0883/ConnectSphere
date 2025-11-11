@@ -91,12 +91,12 @@ export default function Login() {
 
              {error && <p className="text-red-500 text-sm">{String(error)}</p>}
 
-             <button type="submit" disabled={loading} className="btn-brand w-full">
+             <button type="submit" disabled={loading} className="btn-brand w-full cursor-pointer">
                {loading ? 'Logging in…' : 'Login'}
              </button>
            </form>
 
-            <p className="mt-4 text-sm">Don't have an account? <Link to="/signup" className="underline">Sign up</Link></p>
+            <p className="mt-4 text-sm">Don't have an account? <Link to="/signup" className="underline cursor-pointer">Sign up</Link></p>
           </div>
         </motion.div>
       </div>

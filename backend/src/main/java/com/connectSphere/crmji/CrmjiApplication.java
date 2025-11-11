@@ -1,4 +1,4 @@
-package com.connectSphere.crmji;
+package com.ConnectSphere.crmji;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -60,7 +60,6 @@ record UpdateLeadStatusRequest(
 
 @RestController // Marks this class as a Controller where every method returns a domain object instead of a view.
 @RequestMapping("/api/leads") // Maps all HTTP requests starting with '/api/leads' to this controller.
-@PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
 public class LeadController {
 
     // Injects the Service layer bean
@@ -70,10 +69,12 @@ public class LeadController {
     /**
      * GET /api/leads
      * Fetches all leads in the system.
+     * All authenticated users can view leads.
      * @return ResponseEntity with a list of all Leads and HTTP status 200 (OK),
      *         or status 404 (NOT FOUND) with "no data" message if no leads exist.
      */
     @GetMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> getAllLeads() {
         // Delegate the call to the Service layer
         List<Lead> leads = leadService.getAllLeads();
@@ -91,11 +92,13 @@ public class LeadController {
     /**
      * GET /api/leads/{id}
      * Fetches a single lead by its unique ID.
+     * All authenticated users can view leads.
      * @param id The path variable representing the Lead's ID.
      * @return ResponseEntity with the found Lead and status 200 (OK),
      *         or status 404 (NOT FOUND) with "no data" message if the lead doesn't exist.
      */
     @GetMapping("/{id}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> getLeadById(@PathVariable Long id) {
         // Service returns an Optional to handle the "not found" case
         Optional<Lead> lead = leadService.getLeadById(id);
@@ -113,11 +116,13 @@ public class LeadController {
     /**
      * GET /api/leads/email/{email}
      * Fetches a lead by email address.
+     * All authenticated users can view leads.
      * @param email The email address to search for.
      * @return ResponseEntity with the found Lead and status 200 (OK),
      *         or status 404 (NOT FOUND) with "no data" message if the lead doesn't exist.
      */
     @GetMapping("/email/{email}")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Object> getLeadByEmail(@PathVariable String email) {
         Optional<Lead> lead = leadService.getLeadByEmail(email);
 
@@ -131,10 +136,12 @@ public class LeadController {
     /**
      * POST /api/leads
      * Creates a new lead.
+     * All authenticated users can create leads.
      * @param request The request body, automatically deserialized from JSON into a CreateLeadRequest record.
      * @return ResponseEntity with the newly created Lead and status 201 (CREATED).
      */
     @PostMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Lead> createLead(@RequestBody CreateLeadRequest request) {
         // Map the DTO (CreateLeadRequest) to the Entity (Lead)
         Lead newLead = new Lead();
@@ -156,12 +163,14 @@ public class LeadController {
     /**
      * PUT /api/leads/{id}
      * Fully updates an existing lead. Updates only the fields provided in the request.
+     * Only ADMIN and MANAGER can update leads.
      * @param id The path variable representing the Lead's ID to update.
      * @param request The request body containing the new values for the lead.
      * @return ResponseEntity with the updated Lead and status 200 (OK),
      *         or status 404 (NOT FOUND) if the lead doesn't exist.
      */
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<Lead> updateLead(@PathVariable Long id, @RequestBody UpdateLeadRequest request) {
         // Map the DTO to an Entity object to pass to the service
         Lead leadDetails = new Lead();
@@ -183,12 +192,14 @@ public class LeadController {
     /**
      * PATCH /api/leads/{id}/status
      * Updates only the status of an existing lead.
+     * Only ADMIN and MANAGER can update lead status.
      * @param id The path variable representing the Lead's ID to update.
      * @param request The request body containing the new status.
      * @return ResponseEntity with the updated Lead and status 200 (OK),
      *         or status 404 (NOT FOUND) if the lead doesn't exist.
      */
     @PatchMapping("/{id}/status")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<Lead> updateLeadStatus(@PathVariable Long id, @RequestBody UpdateLeadStatusRequest request) {
         Optional<Lead> updatedLead = leadService.updateLeadStatus(id, request.status());
 
@@ -199,11 +210,13 @@ public class LeadController {
     /**
      * DELETE /api/leads/{id}
      * Deletes a lead by its ID.
+     * Only ADMIN and MANAGER can delete leads.
      * @param id The path variable representing the Lead's ID to delete.
      * @return ResponseEntity with success message and status 200 (OK) if deleted successfully,
      *         or status 404 (NOT FOUND) with "Lead not found" message if the lead doesn't exist.
      */
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'MANAGER')")
     public ResponseEntity<String> deleteLead(@PathVariable Long id) {
         boolean wasDeleted = leadService.deleteLead(id);
 

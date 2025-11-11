@@ -31,12 +31,15 @@ public class UserPrincipal implements UserDetails {
      */
     public static UserPrincipal create(User user) {
         String userRole = user.getRole();
+        if (userRole == null) {
+            userRole = "USER";
+        }
 
-        // Ensure it has ROLE_ prefix
-        String authorityRole = userRole.startsWith("ROLE_") ?
-                userRole : "ROLE_" + userRole;
+        // Ensure it has ROLE_ prefix for Spring Security
+        String authorityRole = userRole.toUpperCase().startsWith("ROLE_") ?
+                userRole.toUpperCase() : "ROLE_" + userRole.toUpperCase();
         List<GrantedAuthority> authorities = Collections.singletonList(
-                new SimpleGrantedAuthority("ROLE_" + user.getRole())
+                new SimpleGrantedAuthority(authorityRole)
         );
 
         return new UserPrincipal(

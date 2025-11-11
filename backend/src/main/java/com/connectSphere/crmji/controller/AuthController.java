@@ -79,12 +79,16 @@ public class AuthController {
         String jwt = jwtUtils.generateJwtToken(authentication);
         UserPrincipal userDetails = (UserPrincipal) authentication.getPrincipal();
 
+        // Get user from database to return consistent role format
+        User user = userRepository.findByEmail(userDetails.getEmail())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
         // Prepare response
         Map<String, Object> response = new HashMap<>();
         response.put("token", jwt);
         response.put("id", userDetails.getId());
         response.put("email", userDetails.getEmail());
-        response.put("role", userDetails.getAuthorities().iterator().next().getAuthority());
+        response.put("role", user.getRole()); // Return role without ROLE_ prefix for consistency
 
         return ResponseEntity.ok(response);
     }

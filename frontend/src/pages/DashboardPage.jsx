@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useAuth } from '../context/AuthContext'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import Sidebar from '../components/Sidebar'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { 
   UsersIcon, 
@@ -58,10 +56,8 @@ export default function DashboardPage() {
       // Build API calls based on role
       const promises = {}
       
-      // Leads: Only ADMIN and MANAGER can access
-      if (isAdmin || isManager) {
-        promises.leads = api.get('/api/leads').then(res => res.data).catch(() => [])
-      }
+      // Leads: All authenticated users can view
+      promises.leads = api.get('/api/leads').then(res => res.data).catch(() => [])
       
       // Contacts: Only ADMIN can access
       if (isAdmin) {
@@ -74,7 +70,11 @@ export default function DashboardPage() {
       promises.upcomingActivities = api.get('/api/activities/upcoming').then(res => res.data).catch(() => [])
       promises.overdueActivities = api.get('/api/activities/overdue').then(res => res.data).catch(() => [])
       promises.dealsClosingSoon = api.get('/api/deals/closing-soon').then(res => res.data).catch(() => [])
-      promises.pipelineValue = api.get('/api/deals/stats/pipeline-value').then(res => res.data).catch(() => 0)
+      
+      // Pipeline value: Only ADMIN and MANAGER can see revenue
+      if (!isUser) {
+        promises.pipelineValue = api.get('/api/deals/stats/pipeline-value').then(res => res.data).catch(() => 0)
+      }
 
       const results = await Promise.allSettled(Object.values(promises))
       
@@ -158,24 +158,20 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#fdfcfb] via-[#f7f5ec] to-[#faf6e9]">
-        <Header />
+      <Sidebar>
         <div className="flex items-center justify-center min-h-[60vh]">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
             <p className="text-gray-600">Loading dashboard...</p>
           </div>
         </div>
-        <Footer />
-      </div>
+      </Sidebar>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#fdfcfb] via-[#f7f5ec] to-[#faf6e9]">
-      <Header />
-      
-      <div className="max-w-7xl mx-auto px-6 py-8">
+    <Sidebar>
+      <div className="p-6">
         {/* Welcome Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -198,25 +194,23 @@ export default function DashboardPage() {
 
         {/* Stats Grid - Role-based */}
         <div className={`grid grid-cols-1 md:grid-cols-2 ${isAdmin ? 'lg:grid-cols-5' : isManager ? 'lg:grid-cols-4' : 'lg:grid-cols-3'} gap-6 mb-8`}>
-          {/* Leads - ADMIN and MANAGER only */}
-          {(isAdmin || isManager) && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-            >
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Leads</CardTitle>
-                  <UsersIcon className="h-4 w-4 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">{stats.totalLeads}</div>
-                  <p className="text-xs text-muted-foreground mt-1">Total leads</p>
-                </CardContent>
-              </Card>
-            </motion.div>
-          )}
+          {/* Leads - All users can view */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+          >
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">Leads</CardTitle>
+                <UsersIcon className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{stats.totalLeads}</div>
+                <p className="text-xs text-muted-foreground mt-1">Total leads</p>
+              </CardContent>
+            </Card>
+          </motion.div>
 
           {/* Contacts - ADMIN only */}
           {isAdmin && (
@@ -274,78 +268,78 @@ export default function DashboardPage() {
             </Card>
           </motion.div>
 
-          {/* Pipeline Value - All users */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: isAdmin ? 0.3 : isManager ? 0.25 : 0.2 }}
-          >
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">Pipeline</CardTitle>
-                <CurrencyDollarIcon className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{formatCurrency(stats.pipelineValue)}</div>
-                <p className="text-xs text-muted-foreground mt-1">Total value</p>
-              </CardContent>
-            </Card>
-          </motion.div>
-        </div>
-
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          {/* Recent Leads - ADMIN and MANAGER only */}
-          {(isAdmin || isManager) && (
+          {/* Pipeline Value - ADMIN and MANAGER only (USER cannot see revenue) */}
+          {!isUser && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
+              transition={{ delay: isAdmin ? 0.3 : isManager ? 0.25 : 0.2 }}
             >
               <Card>
-                <CardHeader>
-                  <CardTitle>Recent Leads</CardTitle>
-                  <CardDescription>Latest leads in your pipeline</CardDescription>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Pipeline</CardTitle>
+                  <CurrencyDollarIcon className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  {stats.recentLeads.length > 0 ? (
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead>Name</TableHead>
-                          <TableHead>Status</TableHead>
-                          <TableHead>Date</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {stats.recentLeads.map((lead) => (
-                          <TableRow key={lead.id}>
-                            <TableCell className="font-medium">
-                              {lead.firstName} {lead.lastName}
-                            </TableCell>
-                            <TableCell>
-                              <Badge variant={getStatusBadgeVariant(lead.status)}>
-                                {lead.status || 'New'}
-                              </Badge>
-                            </TableCell>
-                            <TableCell>{formatDate(lead.createdAt)}</TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  ) : (
-                    <p className="text-center text-gray-500 py-8">No leads found</p>
-                  )}
+                  <div className="text-2xl font-bold">{formatCurrency(stats.pipelineValue)}</div>
+                  <p className="text-xs text-muted-foreground mt-1">Total value</p>
                 </CardContent>
               </Card>
             </motion.div>
           )}
+        </div>
+
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          {/* Recent Leads - All users can view */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+          >
+            <Card>
+              <CardHeader>
+                <CardTitle>Recent Leads</CardTitle>
+                <CardDescription>Latest leads in your pipeline</CardDescription>
+              </CardHeader>
+              <CardContent>
+                {stats.recentLeads.length > 0 ? (
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Name</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Date</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {stats.recentLeads.map((lead) => (
+                        <TableRow key={lead.id}>
+                          <TableCell className="font-medium">
+                            {lead.firstName} {lead.lastName}
+                          </TableCell>
+                          <TableCell>
+                            <Badge variant={getStatusBadgeVariant(lead.status)}>
+                              {lead.status || 'New'}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>{formatDate(lead.createdAt)}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                ) : (
+                  <p className="text-center text-gray-500 py-8">No leads found</p>
+                )}
+              </CardContent>
+            </Card>
+          </motion.div>
 
           {/* Recent Deals - All users */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: isAdmin || isManager ? 0.5 : 0.4 }}
+            transition={{ delay: 0.5 }}
           >
             <Card>
               <CardHeader>
@@ -359,7 +353,7 @@ export default function DashboardPage() {
                       <TableRow>
                         <TableHead>Deal</TableHead>
                         <TableHead>Stage</TableHead>
-                        <TableHead>Value</TableHead>
+                        {!isUser && <TableHead>Value</TableHead>}
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -373,7 +367,9 @@ export default function DashboardPage() {
                               {deal.stage || 'New'}
                             </Badge>
                           </TableCell>
-                          <TableCell>{formatCurrency(deal.value)}</TableCell>
+                          {!isUser && (
+                            <TableCell>{formatCurrency(deal.value)}</TableCell>
+                          )}
                         </TableRow>
                       ))}
                     </TableBody>
@@ -478,35 +474,7 @@ export default function DashboardPage() {
             </Card>
           </motion.div>
         </div>
-
-        {/* Action Buttons - Role-based */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9 }}
-          className="flex flex-wrap gap-3"
-        >
-          {(isAdmin || isManager) && (
-            <Button className="bg-blue-600 hover:bg-blue-700" onClick={() => window.location.href = '/leads'}>
-              <UsersIcon className="h-4 w-4 mr-2" />
-              Manage Leads
-            </Button>
-          )}
-          <Button variant="outline" onClick={() => window.location.href = '/deals'}>
-            <CurrencyDollarIcon className="h-4 w-4 mr-2" />
-            View Deals
-          </Button>
-          <Button variant="outline" onClick={() => window.location.href = '/activities'}>
-            <ChartBarIcon className="h-4 w-4 mr-2" />
-            Activities
-          </Button>
-          <Button variant="outline" onClick={fetchDashboardData}>
-            Refresh
-          </Button>
-        </motion.div>
       </div>
-
-      <Footer />
-    </div>
+    </Sidebar>
   )
 }

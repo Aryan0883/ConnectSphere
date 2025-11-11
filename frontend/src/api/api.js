@@ -43,6 +43,14 @@ export const AuthAPI = {
   me: () => api.get('/api/auth/me')
 }
 
+// User management API
+export const UserAPI = {
+  getAllUsers: () => api.get('/api/users'),
+  getUserById: (id) => api.get(`/api/users/${id}`),
+  updateUserRole: (id, role) => api.put(`/api/users/${id}/role`, { role }),
+  deleteUser: (id) => api.delete(`/api/users/${id}`)
+}
+
 export default api
 
 

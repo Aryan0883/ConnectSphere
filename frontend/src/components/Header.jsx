@@ -21,12 +21,12 @@ export default function Header() {
   };
 
   const navLinkClasses = ({ isActive }) =>
-    `px-3 py-2 rounded-lg transition-colors duration-200 ${
+    `px-3 py-2 rounded-lg transition-colors duration-200 cursor-pointer ${
       isActive ? 'bg-white text-[var(--brand)] shadow-sm font-medium' : 'hover:bg-white/80 text-[var(--brand)]'
     }`;
 
   const mobileNavLinkClasses = ({ isActive }) =>
-    `block px-3 py-2 rounded-lg transition-colors duration-200 ${
+    `block px-3 py-2 rounded-lg transition-colors duration-200 cursor-pointer ${
       isActive ? 'bg-white text-[var(--brand)] shadow-sm font-medium' : 'hover:bg-white/80 text-[var(--brand)]'
     }`;
 
@@ -36,7 +36,7 @@ export default function Header() {
         {/* Logo */}
         <Link 
           to="/" 
-          className="font-semibold tracking-tight text-[var(--brand)] hover:opacity-80 transition-opacity"
+          className="font-semibold tracking-tight text-[var(--brand)] hover:opacity-80 transition-opacity cursor-pointer"
         >
           ClientSphere
         </Link>
@@ -54,7 +54,7 @@ export default function Header() {
               </NavLink>
               <button 
                 onClick={logout} 
-                className="px-3 py-2 rounded-lg bg-white text-[var(--brand)] hover:bg-white/90 transition-colors duration-200 shadow-sm"
+                className="px-3 py-2 rounded-lg bg-white text-[var(--brand)] hover:bg-white/90 transition-colors duration-200 shadow-sm cursor-pointer"
               >
                 Logout
               </button>
@@ -73,7 +73,7 @@ export default function Header() {
 
         {/* Mobile Menu Button */}
         <button 
-          className="md:hidden p-2 rounded-lg hover:bg-white/80 transition-colors duration-200" 
+          className="md:hidden p-2 rounded-lg hover:bg-white/80 transition-colors duration-200 cursor-pointer" 
           onClick={handleMenuToggle}
           aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={isMenuOpen}
@@ -109,7 +109,7 @@ export default function Header() {
               </NavLink>
               <button 
                 onClick={handleLogout}
-                className="block w-full text-left px-3 py-2 rounded-lg bg-white text-[var(--brand)] hover:bg-white/90 transition-colors duration-200 shadow-sm"
+                className="block w-full text-left px-3 py-2 rounded-lg bg-white text-[var(--brand)] hover:bg-white/90 transition-colors duration-200 shadow-sm cursor-pointer"
               >
                 Logout
               </button>

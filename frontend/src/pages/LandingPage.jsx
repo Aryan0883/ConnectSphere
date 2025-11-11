@@ -62,13 +62,13 @@ export default function LandingPage() {
         >
           <Link 
             to="/login" 
-            className="px-8 py-3 text-lg font-semibold rounded-lg bg-white border border-gray-300 text-[var(--brand)] hover:bg-gray-50 transition-all shadow-sm"
+            className="px-8 py-3 text-lg font-semibold rounded-lg bg-white border border-gray-300 text-[var(--brand)] hover:bg-gray-50 transition-all shadow-sm cursor-pointer"
           >
             Log In
           </Link>
           <Link 
             to="/signup" 
-            className="px-8 py-3 text-lg font-semibold rounded-lg text-white bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 transition-all shadow-md"
+            className="px-8 py-3 text-lg font-semibold rounded-lg text-white bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 transition-all shadow-md cursor-pointer"
           >
             Sign Up Free
           </Link>
